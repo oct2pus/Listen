@@ -1,6 +1,7 @@
 package main
 
 import (
+	"listen/audio"
 	"listen/gui"
 	"listen/gui/widgets"
 	"listen/util"
@@ -30,5 +31,7 @@ func activateConnect(app *gtk.Application) {
 
 	//define widgets
 	window = widgets.Define(window)
+
+	window.PlayButt.Connect("clicked", func() { audio.Read() })
 
 }
