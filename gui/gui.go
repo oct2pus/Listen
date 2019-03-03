@@ -8,18 +8,24 @@ import (
 )
 
 // GUI is a collection of widgets used in the GUI
+// Some widgets are highlighted out because they won't be needed until
+// a later revision.
 type GUI struct {
 	AppWindow *gtk.ApplicationWindow
 	Header    *gtk.HeaderBar
 	TrackBox  *gtk.Box
 	PlayButt  *gtk.Button
 	VolButt   *gtk.VolumeButton
-	MenuButt  *gtk.MenuButton
+	FileButt  *gtk.Button
+	//	MenuButt  *gtk.MenuButton
 	ProgScale *gtk.Scale
 	ImgPlay   *gtk.Image
-	ImgMenu   *gtk.Image
-	ImgTrack  *gtk.Image
-	PopMenu   *gtk.Popover
+	ImgFile   *gtk.Image
+	//	ImgMenu   *gtk.Image
+	ImgTrack *gtk.Image
+	//	PopMenu   *gtk.Popover
+	//	PopPick   *gtk.FileChooserButton
+
 }
 
 // New creates a GUI struct.
@@ -52,26 +58,38 @@ func (g GUI) New(app *gtk.Application) GUI {
 	if err != nil {
 		util.SendError(err, "volume button")
 	}
-	g.MenuButt, err = gtk.MenuButtonNew()
-	if err != nil {
-		util.SendError(err, "menu button")
-	}
+	/*	g.MenuButt, err = gtk.MenuButtonNew()
+		if err != nil {
+			util.SendError(err, "menu button")
+		} */
 	g.ImgPlay, err = gtk.ImageNew()
 	if err != nil {
 		util.SendError(err, "play button icon")
 	}
-	g.ImgMenu, err = gtk.ImageNew()
-	if err != nil {
-		util.SendError(err, "menu icon")
-	}
-	g.ImgTrack, err = gtk.ImageNewFromPixbuf(util.GetPixBuf(400, 400))
+	/*	g.ImgMenu, err = gtk.ImageNew()
+		if err != nil {
+			util.SendError(err, "menu icon")
+		} */
+	g.ImgTrack, err = gtk.ImageNewFromPixbuf(util.GetPixBuf(ArtSize, ArtSize))
 	if err != nil {
 		util.SendError(err, "Track Art")
 	}
-	g.PopMenu, err = gtk.PopoverNew(g.MenuButt)
+	g.ImgFile, err = gtk.ImageNew()
 	if err != nil {
-		util.SendError(err, "popover")
+		util.SendError(err, "file icon")
 	}
-
+	/*	g.PopMenu, err = gtk.PopoverNew(g.MenuButt)
+		if err != nil {
+			util.SendError(err, "popover")
+		} */
+	/* g.PopPick, err = gtk.FileChooserButtonNew("Open File",
+		gtk.FILE_CHOOSER_ACTION_OPEN)
+	if err != nil {
+		util.SendError(err, "file chooser")
+	} */
+	g.FileButt, err = gtk.ButtonNew()
+	if err != nil {
+		util.SendError(err, "file chooser button")
+	}
 	return g
 }
