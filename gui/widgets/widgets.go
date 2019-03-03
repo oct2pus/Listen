@@ -27,7 +27,9 @@ func PlayPressed(g gui.GUI) {
 	iconName, _ := g.ImgPlay.GetIconName()
 	switch iconName {
 	case "media-playback-start-symbolic":
-		audio.Read()
+		mus := audio.Read()
+
+		g.ImgTrack.SetFromPixbuf(mus.Art)
 		g.ImgPlay.SetFromIconName("media-playback-stop-symbolic",
 			gtk.ICON_SIZE_BUTTON)
 	case "media-playback-stop-symbolic":
@@ -60,5 +62,8 @@ func FilePressed(g gui.GUI) {
 
 	if diag.Run() == int(gtk.RESPONSE_ACCEPT) {
 		gui.MusicFile = diag.GetFilename()
+		mus := audio.Read()
+
+		g.ImgTrack.SetFromPixbuf(mus.Art)
 	}
 }
