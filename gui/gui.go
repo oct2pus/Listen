@@ -70,7 +70,8 @@ func (g GUI) New(app *gtk.Application) GUI {
 		if err != nil {
 			util.SendError(err, "menu icon")
 		} */
-	g.ImgTrack, err = gtk.ImageNewFromPixbuf(util.GetPixBuf(ArtSize, ArtSize))
+	g.ImgTrack, err = gtk.ImageNewFromIconName("action-unavailable-symbolic",
+		gtk.ICON_SIZE_DND)
 	if err != nil {
 		util.SendError(err, "Track Art")
 	}
