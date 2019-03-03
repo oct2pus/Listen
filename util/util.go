@@ -8,7 +8,7 @@ import (
 
 // SendError is a helper function to write a formatted error.
 func SendError(err error, issue string) {
-	log.Fatal("Could not create "+issue+".", err)
+	log.Printf("issue: %x.\nerror: %x",issue, err)
 }
 
 // GetPixBuf gets a PixBuf from a file; hopefully scaling it properly.
