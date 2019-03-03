@@ -30,6 +30,6 @@ func activateConnect(app *gtk.Application) {
 	//define widgets
 	window = widgets.Define(window)
 
-	window.PlayButt.Connect("clicked", func() { widgets.PlayPressed(window) })
+//	window.PlayButt.Connect("clicked", func() { widgets.PlayPressed(window) })
 	window.FileButt.Connect("clicked", func() { widgets.FilePressed(window) })
 }
