@@ -1,7 +1,6 @@
 package main
 
 import (
-	"listen/audio"
 	"listen/gui"
 	"listen/gui/widgets"
 	"listen/util"
@@ -20,7 +19,6 @@ func main() {
 		util.SendError(err, "application")
 	}
 	app.Connect("activate", func() { activateConnect(app) })
-
 	app.Run(os.Args)
 }
 
@@ -32,6 +30,6 @@ func activateConnect(app *gtk.Application) {
 	//define widgets
 	window = widgets.Define(window)
 
-	window.PlayButt.Connect("clicked", func() { audio.Read() })
-
+	window.PlayButt.Connect("clicked", func() { widgets.PlayPressed(window) })
+	window.FileButt.Connect("clicked", func() { widgets.FilePressed(window) })
 }
