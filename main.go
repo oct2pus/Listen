@@ -3,7 +3,7 @@ package main
 import (
 	"listen/gui"
 	"listen/gui/widgets"
-	"listen/util"
+	"listen/logic"
 	"os"
 
 	"github.com/gotk3/gotk3/glib"
@@ -16,7 +16,7 @@ func main() {
 	app, err := gtk.ApplicationNew(appID, glib.APPLICATION_FLAGS_NONE)
 
 	if err != nil {
-		util.SendError(err, "application")
+		logic.SendError(err, "application")
 	}
 	app.Connect("activate", func() { activateConnect(app) })
 	app.Run(os.Args)
@@ -30,6 +30,7 @@ func activateConnect(app *gtk.Application) {
 	//define widgets
 	window = widgets.Define(window)
 
-//	window.PlayButt.Connect("clicked", func() { widgets.PlayPressed(window) })
-	window.FileButt.Connect("clicked", func() { widgets.FilePressed(window) })
+	//	window.PlayButt.Connect("clicked", func() { widgets.PlayPressed(window) })
+	window.FileButt.Connect("clicked",
+		func() { widgets.FilePressed(window) })
 }
