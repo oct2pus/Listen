@@ -30,7 +30,7 @@ func Read(path string) AudioData {
 		ssc, format, err = flac.Decode(f)
 	case tag.MP3:
 		ssc, format, err = mp3.Decode(f)
-	case tag.OGG:
+	case tag.OGG: // currently disabled
 		ssc, format, err = vorbis.Decode(f)
 	default:
 		return AudioData{} // TODO: not this

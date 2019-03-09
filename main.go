@@ -2,6 +2,7 @@ package main
 
 import (
 	"listen/gui"
+	"listen/gui/actions"
 	"listen/gui/widgets"
 	"listen/logic"
 	"os"
@@ -32,5 +33,5 @@ func activateConnect(app *gtk.Application) {
 
 	//	window.PlayButt.Connect("clicked", func() { widgets.PlayPressed(window) })
 	window.FileButt.Connect("clicked",
-		func() { widgets.FilePressed(window) })
+		func() { actions.FilePressed(window) })
 }

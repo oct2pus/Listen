@@ -1,4 +1,6 @@
 cover.png
 listen
+*.flac
+*.ogg
 *.mp3
 .temp_cover
