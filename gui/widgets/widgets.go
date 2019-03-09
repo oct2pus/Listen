@@ -62,6 +62,11 @@ func FilePressed(g gui.GUI) {
 		mus := logic.Read(diag.GetFilename())
 		g.ImgPlay.SetFromIconName("media-playback-stop-symbolic",
 			gtk.ICON_SIZE_BUTTON)
-		g.ImgTrack.SetFromPixbuf(mus.Art)
+		if mus.Art != nil {
+			g.ImgTrack.SetFromPixbuf(mus.Art)
+		} else {
+			g.ImgTrack.SetFromIconName("action-unavailable-symbolic",
+				gtk.ICON_SIZE_DND)
+		}
 	}
 }

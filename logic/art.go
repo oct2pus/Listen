@@ -3,13 +3,14 @@ package logic
 import (
 	//	"github.com/dhowden/tag"
 
+	"errors"
 	"os"
 
 	"github.com/gotk3/gotk3/gdk"
 )
 
 // FindArt takes the art from the track and returns a pixbuf of it
-func FindArt(a AudioData) *gdk.Pixbuf {
+func FindArt(a AudioData) (*gdk.Pixbuf, error) {
 
 	// process picture
 	mus, meta := a.openMusic()
@@ -17,7 +18,10 @@ func FindArt(a AudioData) *gdk.Pixbuf {
 
 	pic := meta.Picture()
 
-	println((*pic).String())
+	// pic doesn't return an error, it only nils
+	if pic == nil {
+		return nil, errors.New("No picture found")
+	}
 
 	f, err := os.Create("./.temp_cover")
 	if err != nil {
@@ -39,5 +43,5 @@ func FindArt(a AudioData) *gdk.Pixbuf {
 		SendError(err, "setting album art pixbuf")
 	}
 
-	return pix
+	return pix, nil
 }

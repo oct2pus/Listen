@@ -21,11 +21,15 @@ type AudioData struct {
 // NewAudioData defines a new AudioData
 func NewAudioData(ssc beep.StreamSeekCloser, path string) AudioData {
 	var a AudioData
+	var err error
 	a.NowTime = 0
 	a.EndTime = ssc.Len()
 	a.Stream = ssc
 	a.Path = path
-	a.Art = FindArt(a)
+	a.Art, err = FindArt(a)
+	if err != nil {
+		a.Art = nil
+	}
 	return a
 }
 

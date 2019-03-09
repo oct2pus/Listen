@@ -40,7 +40,6 @@ func Read(path string) AudioData {
 	}
 
 	a = NewAudioData(ssc, path)
-
 	// Play Audio
 	speaker.Init(format.SampleRate, format.SampleRate.N((time.Second / 10)))
 	speaker.Play(ssc)
