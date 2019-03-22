@@ -28,10 +28,10 @@ type Elements struct {
 
 }
 
-// New creates a GUI struct.
+// New creates a Elements struct.
 // Aka it creates all widgets needed for the application.
 // **GO FREAKS OUT IF YOU MAKE A Elements POINTER.**
-func (g Elements) New(app *gtk.Application) GUI {
+func (g Elements) New(app *gtk.Application) Elements {
 	var err error
 	g.AppWindow, err = gtk.ApplicationWindowNew(app)
 	if err != nil {

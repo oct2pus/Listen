@@ -16,7 +16,7 @@ func InitWidgets(window Elements) Elements {
 }
 
 // setAppWindowValues initializes all widget values that belong to GUI.AppWindow.
-func setAppWindowValues(w gui.GUI) gui.GUI {
+func setAppWindowValues(w Elements) Elements {
 	// AppWindow
 	w.AppWindow.Add(w.TrackBox)
 	w.AppWindow.SetTitlebar(w.Header)
@@ -29,7 +29,7 @@ func setAppWindowValues(w gui.GUI) gui.GUI {
 }
 
 // setHeaderValues initalizes all widget values that belong to GUI.Header.
-func setHeaderValues(w gui.GUI) gui.GUI {
+func setHeaderValues(w Elements) Elements {
 	// Buttons
 	//w.ImgMenu.SetFromIconName("open-menu-symbolic", gtk.ICON_SIZE_BUTTON)
 	w.ImgFile.SetFromIconName("document-open-symbolic", gtk.ICON_SIZE_BUTTON)
@@ -59,7 +59,7 @@ func setHeaderValues(w gui.GUI) gui.GUI {
 }
 
 // setTrackBoxValues initializes all widget values that belong to GUI.TrackBox.
-func setTrackBoxValues(w gui.GUI) gui.GUI {
+func setTrackBoxValues(w Elements) Elements {
 	// TrackBox
 	w.TrackBox.Add(w.ImgTrack)
 	w.ImgTrack.SetHExpand(true)
