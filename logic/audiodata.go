@@ -6,25 +6,32 @@ import (
 
 	"github.com/dhowden/tag"
 	"github.com/faiface/beep"
+	"github.com/faiface/beep/effects"
 	"github.com/gotk3/gotk3/gdk"
 )
 
-// AudioData is a wrapper around everything we need to store about an audio file.
+// AudioData is a wrapper around everything we need to store about an audio
+// file.
 type AudioData struct {
-	EndTime int
-	NowTime int
-	Art     *gdk.Pixbuf
-	Stream  beep.StreamSeekCloser
-	Path    string
+	Art    *gdk.Pixbuf
+	Stream beep.StreamSeekCloser
+	Ctrl   *beep.Ctrl
+	Vol    *effects.Volume
+	Path   string
 }
 
-// NewAudioData defines a new AudioData
+// NewAudioData defines a new AudioData.
 func NewAudioData(ssc beep.StreamSeekCloser, path string) AudioData {
 	var a AudioData
 	var err error
-	a.NowTime = 0
-	a.EndTime = ssc.Len()
 	a.Stream = ssc
+	a.Ctrl = &beep.Ctrl{Streamer: a.Stream, Paused: false}
+	a.Vol = &effects.Volume{
+		Streamer: a.Stream,
+		Base:     2,
+		Volume:   0,
+		Silent:   false,
+	}
 	a.Path = path
 	a.Art, err = FindArt(a)
 	if err != nil {
@@ -33,11 +40,11 @@ func NewAudioData(ssc beep.StreamSeekCloser, path string) AudioData {
 	return a
 }
 
-// String returns a string of AudioData, mostly for diagnostics
+// String returns a string of AudioData, this is for diagnostics.
 func (a AudioData) String() string {
 	return fmt.Sprintf("Now: %x\nEnd: %x\nStream: %x\nArt: %x\nPath: %x",
-		a.NowTime,
-		a.EndTime,
+		a.Stream.Position(),
+		a.Stream.Len(),
 		a.Stream,
 		a.Art,
 		a.Path)
