@@ -1,4 +1,4 @@
 package logic
 
-// ArtSize is how large the initial window should be
+// ArtSize is how large the window should be.
 const ArtSize = 400
