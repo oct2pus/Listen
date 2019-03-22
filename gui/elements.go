@@ -7,10 +7,10 @@ import (
 	"github.com/gotk3/gotk3/gtk"
 )
 
-// GUI is a collection of widgets used in the GUI
-// Some widgets are highlighted out because they won't be needed until
+// Elements is a collection of widgets used in the GUI
+// Some widgets are commented out because they won't be needed until
 // a later revision.
-type GUI struct {
+type Elements struct {
 	AppWindow *gtk.ApplicationWindow
 	Header    *gtk.HeaderBar
 	TrackBox  *gtk.Box
@@ -29,9 +29,9 @@ type GUI struct {
 }
 
 // New creates a GUI struct.
-// Aka it creates all widgets needed for the application
-// **GO FREAKS OUT IF YOU MAKE A GUI POINTER.**
-func (g GUI) New(app *gtk.Application) GUI {
+// Aka it creates all widgets needed for the application.
+// **GO FREAKS OUT IF YOU MAKE A Elements POINTER.**
+func (g Elements) New(app *gtk.Application) GUI {
 	var err error
 	g.AppWindow, err = gtk.ApplicationWindowNew(app)
 	if err != nil {
