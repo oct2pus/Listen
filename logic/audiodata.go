@@ -14,20 +14,20 @@ import (
 // file.
 type AudioData struct {
 	Art    *gdk.Pixbuf
-	Stream beep.StreamSeekCloser
+	Stream *beep.StreamSeekCloser
 	Ctrl   *beep.Ctrl
 	Vol    *effects.Volume
 	Path   string
 }
 
 // NewAudioData defines a new AudioData.
-func NewAudioData(ssc beep.StreamSeekCloser, path string) AudioData {
+func NewAudioData(ssc *beep.StreamSeekCloser, path string) AudioData {
 	var a AudioData
 	var err error
 	a.Stream = ssc
-	a.Ctrl = &beep.Ctrl{Streamer: a.Stream, Paused: false}
+	a.Ctrl = &beep.Ctrl{Streamer: *a.Stream, Paused: false}
 	a.Vol = &effects.Volume{
-		Streamer: a.Stream,
+		Streamer: *a.Stream,
 		Base:     2,
 		Volume:   0,
 		Silent:   false,
@@ -42,9 +42,9 @@ func NewAudioData(ssc beep.StreamSeekCloser, path string) AudioData {
 
 // String returns a string of AudioData, this is for diagnostics.
 func (a AudioData) String() string {
-	return fmt.Sprintf("Now: %x\nEnd: %x\nStream: %x\nArt: %x\nPath: %x",
-		a.Stream.Position(),
-		a.Stream.Len(),
+	return fmt.Sprintf("\nNow: %x\nEnd: %x\nStream: %x\nArt: %x\nPath: %x",
+		(*a.Stream).Position(),
+		(*a.Stream).Len(),
 		a.Stream,
 		a.Art,
 		a.Path)
