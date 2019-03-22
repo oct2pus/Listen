@@ -10,6 +10,6 @@ Simple Music Player; built with Gotk3.
 - [x] .mp3, .flac, .ogg\* format support
 - [x] displays embedded track art
 - [ ] displays unembedded album art
-- [ ] pausing and resuming
+- [x] pausing and resuming
 - [ ] free move
 - [ ] launch song from terminal
