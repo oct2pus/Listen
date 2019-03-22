@@ -1,7 +1,10 @@
 package gui
 
 import (
+	"fmt"
 	"listen/logic"
+
+	"github.com/faiface/beep/speaker"
 
 	"github.com/gotk3/gotk3/gtk"
 )
@@ -17,13 +20,12 @@ type Actions struct {
 // Pauses and Unpauses media playback.
 func (a Actions) PlayPressed() Actions {
 	iconName, _ := a.GUI.ImgPlay.GetIconName()
+	a.startStop()
 	switch iconName {
 	case "media-playback-start-symbolic":
-		a.start()
 		a.GUI.ImgPlay.SetFromIconName("media-playback-stop-symbolic",
 			gtk.ICON_SIZE_BUTTON)
 	case "media-playback-stop-symbolic":
-		a.stop()
 		a.GUI.ImgPlay.SetFromIconName("media-playback-start-symbolic",
 			gtk.ICON_SIZE_BUTTON)
 	}
@@ -78,12 +80,11 @@ func (a Actions) FilePressed() Actions {
 	return a
 }
 
-func (a Actions) start() {
-
-}
-
-func (a Actions) stop() {
-
+func (a Actions) startStop() {
+	fmt.Printf(a.Audio.String())
+	speaker.Lock()
+	a.Audio.Ctrl.Paused = !a.Audio.Ctrl.Paused
+	speaker.Unlock()
 }
 
 // ParseArgs parses commandline arguments to launch a song.

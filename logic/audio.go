@@ -39,10 +39,10 @@ func Read(path string) AudioData {
 		SendError(err, "invalid file")
 	}
 
-	a = NewAudioData(ssc, path)
+	a = NewAudioData(&ssc, path)
 	// Play Audio
 	speaker.Init(format.SampleRate, format.SampleRate.N((time.Second / 10)))
-	speaker.Play(ssc)
+	speaker.Play(a.Ctrl)
 
 	return a
 }
