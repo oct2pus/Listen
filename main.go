@@ -2,8 +2,6 @@ package main
 
 import (
 	"listen/gui"
-	"listen/gui/actions"
-	"listen/gui/widgets"
 	"listen/logic"
 	"os"
 
@@ -13,25 +11,33 @@ import (
 
 func main() {
 	const appID = "moe.jade.listen"
-
+	args := os.Args
 	app, err := gtk.ApplicationNew(appID, glib.APPLICATION_FLAGS_NONE)
 
 	if err != nil {
 		logic.SendError(err, "application")
+	}
+	if args != nil {
+		//		actions.ParseArgs(args)
 	}
 	app.Connect("activate", func() { activateConnect(app) })
 	app.Run(os.Args)
 }
 
 func activateConnect(app *gtk.Application) {
+
 	//create widgets
-	var window gui.GUI
-	window = gui.GUI.New(window, app)
+	var window gui.Elements
+	window = gui.Elements.New(window, app)
 
 	//define widgets
-	window = widgets.Define(window)
+	window = gui.InitWidgets(window)
 
-	//	window.PlayButt.Connect("clicked", func() { widgets.PlayPressed(window) })
+	// define actions
+	actions := gui.Actions{GUI: window}
+
+	window.PlayButt.Connect("clicked",
+		func() { actions = actions.PlayPressed() })
 	window.FileButt.Connect("clicked",
-		func() { actions.FilePressed(window) })
+		func() { actions = actions.FilePressed() })
 }
