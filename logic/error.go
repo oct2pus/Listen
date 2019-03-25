@@ -6,5 +6,5 @@ import (
 
 // SendError is a helper function to write a formatted error.
 func SendError(err error, issue string) {
-	log.Printf("issue: %x.\nerror: %x", issue, err)
+	log.Printf("issue: %v.\nerror: %v", issue, err)
 }
