@@ -27,7 +27,7 @@ func NewAudioData(ssc *beep.StreamSeekCloser, path string) AudioData {
 	a.Stream = ssc
 	a.Ctrl = &beep.Ctrl{Streamer: *a.Stream, Paused: false}
 	a.Vol = &effects.Volume{
-		Streamer: *a.Stream,
+		Streamer: a.Ctrl,
 		Base:     2,
 		Volume:   0,
 		Silent:   false,
