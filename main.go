@@ -40,4 +40,6 @@ func activateConnect(app *gtk.Application) {
 		func() { actions = actions.PlayPressed() })
 	window.FileButt.Connect("clicked",
 		func() { actions = actions.FilePressed() })
+	window.VolButt.Connect("value-changed",
+		func() { actions = actions.VolumeSlid() })
 }

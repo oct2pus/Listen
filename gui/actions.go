@@ -1,7 +1,6 @@
 package gui
 
 import (
-	"fmt"
 	"listen/logic"
 
 	"github.com/faiface/beep/speaker"
@@ -69,6 +68,8 @@ func (a Actions) FilePressed() Actions {
 		a.GUI.ImgPlay.SetFromIconName("media-playback-stop-symbolic",
 			gtk.ICON_SIZE_BUTTON)
 		a.GUI.PlayButt.SetSensitive(true)
+		a.GUI.VolButt.SetSensitive(true)
+		a = a.VolumeSlid()
 		if a.Audio.Art != nil {
 			a.GUI.ImgTrack.SetFromPixbuf(a.Audio.Art)
 		} else {
@@ -80,8 +81,23 @@ func (a Actions) FilePressed() Actions {
 	return a
 }
 
+// VolumeSlid is called when the volume slider is moved.
+func (a Actions) VolumeSlid() Actions {
+	speaker.Lock()
+	val := a.GUI.VolButt.GetValue()
+	switch int(val * 10) {
+	default:
+		a.Audio.Vol.Silent = false
+		a.Audio.Vol.Volume = 0 - (1-val)*10
+	case 0:
+		a.Audio.Vol.Silent = true
+	}
+	speaker.Unlock()
+
+	return a
+}
+
 func (a Actions) startStop() {
-	fmt.Printf(a.Audio.String())
 	speaker.Lock()
 	a.Audio.Ctrl.Paused = !a.Audio.Ctrl.Paused
 	speaker.Unlock()
