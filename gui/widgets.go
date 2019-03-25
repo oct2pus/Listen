@@ -10,8 +10,8 @@ import (
 func InitWidgets(window Elements) Elements {
 	window = setAppWindowValues(window)
 	window = setHeaderValues(window)
-	//	window = SetPopMenuValues(window)
 	window = setTrackBoxValues(window)
+	//	window = SetPopMenuValues(window)
 	return window
 }
 
@@ -39,6 +39,8 @@ func setHeaderValues(w Elements) Elements {
 	w.PlayButt.SetImage(w.ImgPlay)
 	w.PlayButt.SetSensitive(false)
 	w.FileButt.SetImage(w.ImgFile)
+	w.VolButt.SetValue(1)
+	w.VolButt.SetSensitive(false)
 	//w.MenuButt.SetPopover(w.PopMenu)
 
 	// ProgScale
