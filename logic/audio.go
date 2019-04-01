@@ -30,10 +30,10 @@ func Read(path string) AudioData {
 		ssc, format, err = flac.Decode(f)
 	case tag.MP3:
 		ssc, format, err = mp3.Decode(f)
-	case tag.OGG: // currently disabled
+	case tag.OGG:
 		ssc, format, err = vorbis.Decode(f)
 	default:
-		return AudioData{} // TODO: not this
+		return AudioData{}
 	}
 	if err != nil {
 		SendError(err, "invalid file")
@@ -52,4 +52,3 @@ func findFileType(a AudioData) tag.FileType {
 	defer f.Close() // better safe than sorry
 	return meta.FileType()
 }
-

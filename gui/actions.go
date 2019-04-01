@@ -59,7 +59,7 @@ func (a Actions) FilePressed() Actions {
 	}
 	filt.AddPattern("*.mp3")
 	filt.AddPattern("*.flac")
-	//	filt.AddPattern("*.ogg") could possibly break if its not a vorbis
+	filt.AddPattern("*.ogg") // could possibly break if not a vorbis file.
 	diag.SetFilter(filt)
 
 	// if option is selected
