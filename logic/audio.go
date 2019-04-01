@@ -1,17 +1,16 @@
 package logic
 
 import (
+	"errors"
 	"os"
 	"time"
 
 	"github.com/dhowden/tag"
+	"github.com/faiface/beep"
 	"github.com/faiface/beep/flac"
 	"github.com/faiface/beep/mp3"
-	"github.com/faiface/beep/vorbis"
-
 	"github.com/faiface/beep/speaker"
-
-	"github.com/faiface/beep"
+	"github.com/faiface/beep/vorbis"
 )
 
 // Read reads and creates an Audio file
@@ -33,17 +32,14 @@ func Read(path string) AudioData {
 	case tag.OGG:
 		ssc, format, err = vorbis.Decode(f)
 	default:
+		SendError(errors.New("Invalid stream type"), "cannot read file")
 		return AudioData{}
-	}
-	if err != nil {
-		SendError(err, "invalid file")
 	}
 
 	a = NewAudioData(&ssc, path)
 	// Play Audio
 	speaker.Init(format.SampleRate, format.SampleRate.N((time.Second / 10)))
 	speaker.Play(a.Vol)
-
 	return a
 }
 

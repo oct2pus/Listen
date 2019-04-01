@@ -42,4 +42,14 @@ func activateConnect(app *gtk.Application) {
 		func() { actions = actions.FilePressed() })
 	window.VolButt.Connect("value-changed",
 		func() { actions = actions.VolumeSlid() })
+
+	// ProgScale Events
+	window.ProgScale.Connect("button-press-event",
+		func() { actions.Block() })
+	window.ProgScale.Connect("button-release-event",
+		func() { actions = actions.MoveProg() })
+	window.ProgScale.ConnectAfter("draw",
+		func() { actions = actions.DrawProg() })
+	window.ProgScale.Connect("value-changed",
+		func() { actions = actions.IsEnd() })
 }

@@ -33,7 +33,7 @@ func setHeaderValues(w Elements) Elements {
 	// Buttons
 	//w.ImgMenu.SetFromIconName("open-menu-symbolic", gtk.ICON_SIZE_BUTTON)
 	w.ImgFile.SetFromIconName("document-open-symbolic", gtk.ICON_SIZE_BUTTON)
-	w.ImgPlay.SetFromIconName("media-playback-start-symbolic",
+	w.ImgPlay.SetFromIconName(START,
 		gtk.ICON_SIZE_BUTTON)
 	//w.MenuButt.SetImage(w.ImgMenu)
 	w.PlayButt.SetImage(w.ImgPlay)

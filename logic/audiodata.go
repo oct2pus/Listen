@@ -42,7 +42,7 @@ func NewAudioData(ssc *beep.StreamSeekCloser, path string) AudioData {
 
 // String returns a string of AudioData, this is for diagnostics.
 func (a AudioData) String() string {
-	return fmt.Sprintf("\nNow: %x\nEnd: %x\nStream: %x\nArt: %x\nPath: %x",
+	return fmt.Sprintf("\nNow: %v\nEnd: %v\nStream: %v\nArt: %v\nPath: %v",
 		(*a.Stream).Position(),
 		(*a.Stream).Len(),
 		a.Stream,

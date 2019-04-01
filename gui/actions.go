@@ -8,6 +8,8 @@ import (
 	"github.com/gotk3/gotk3/gtk"
 )
 
+var block = false
+
 // Actions represents a coordination of the gui layer and the logic layer.
 // aka Actions just holds everything needed to do a signal lol.
 type Actions struct {
@@ -21,11 +23,11 @@ func (a Actions) PlayPressed() Actions {
 	iconName, _ := a.GUI.ImgPlay.GetIconName()
 	a.startStop()
 	switch iconName {
-	case "media-playback-start-symbolic":
-		a.GUI.ImgPlay.SetFromIconName("media-playback-stop-symbolic",
+	case START:
+		a.GUI.ImgPlay.SetFromIconName(STOP,
 			gtk.ICON_SIZE_BUTTON)
-	case "media-playback-stop-symbolic":
-		a.GUI.ImgPlay.SetFromIconName("media-playback-start-symbolic",
+	case STOP:
+		a.GUI.ImgPlay.SetFromIconName(START,
 			gtk.ICON_SIZE_BUTTON)
 	}
 
@@ -69,6 +71,7 @@ func (a Actions) FilePressed() Actions {
 			gtk.ICON_SIZE_BUTTON)
 		a.GUI.PlayButt.SetSensitive(true)
 		a.GUI.VolButt.SetSensitive(true)
+		a.GUI.ProgScale.SetRange(0, float64((*a.Audio.Stream).Len()))
 		a = a.VolumeSlid()
 		if a.Audio.Art != nil {
 			a.GUI.ImgTrack.SetFromPixbuf(a.Audio.Art)
@@ -101,6 +104,49 @@ func (a Actions) startStop() {
 	speaker.Lock()
 	a.Audio.Ctrl.Paused = !a.Audio.Ctrl.Paused
 	speaker.Unlock()
+}
+
+// MoveProg occurs when the user moves the slider.
+func (a Actions) MoveProg() Actions {
+	speaker.Lock()
+	err := (*a.Audio.Stream).Seek(int(a.GUI.ProgScale.GetValue()))
+	if err != nil {
+		logic.SendError(err, "Audio Stream Seek")
+	}
+	println((*a.Audio.Stream).Position(), a.GUI.ProgScale.GetValue())
+	speaker.Unlock()
+	block = false
+	return a
+}
+
+// DrawProg occurs every moment a song is playing and not being blocked.
+func (a Actions) DrawProg() Actions {
+	if a.Audio.Stream != nil && !block {
+		a.GUI.ProgScale.SetValue(float64((*a.Audio.Stream).Position()))
+		a.GUI.ProgScale.QueueDraw()
+	}
+	return a
+}
+
+// IsEnd is emitted when the value of ProgScale changes, checks if is the end,
+// if so reload the song and pause the player.
+func (a Actions) IsEnd() Actions {
+	if (*a.Audio.Stream).Position() == (*a.Audio.Stream).Len() {
+		speaker.Lock()
+		a.GUI.ProgScale.SetValue(0)
+		(*a.Audio.Stream).Seek(0)
+		println((*a.Audio.Stream))
+		a.GUI.ImgPlay.SetFromIconName(START,
+			gtk.ICON_SIZE_BUTTON)
+		a.Audio.Ctrl.Paused = !a.Audio.Ctrl.Paused
+		speaker.Unlock()
+	}
+	return a
+}
+
+// Block sets the block variable to true.
+func (a Actions) Block() {
+	block = true
 }
 
 // ParseArgs parses commandline arguments to launch a song.
