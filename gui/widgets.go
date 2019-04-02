@@ -7,9 +7,9 @@ import (
 )
 
 // InitWidgets calls and initalizes the starting values of all widge.ts
-func InitWidgets(window Elements) Elements {
+func InitWidgets(window Elements, cmdLaunch bool) Elements {
 	window = setAppWindowValues(window)
-	window = setHeaderValues(window)
+	window = setHeaderValues(window, cmdLaunch)
 	window = setTrackBoxValues(window)
 	//	window = SetPopMenuValues(window)
 	return window
@@ -21,15 +21,13 @@ func setAppWindowValues(w Elements) Elements {
 	w.AppWindow.Add(w.TrackBox)
 	w.AppWindow.SetTitlebar(w.Header)
 	w.AppWindow.SetDefaultSize(logic.ArtSize, logic.ArtSize)
-	w.AppWindow.SetResizable(false) // may consider changing this one day
-	// 								   don't think this application is ever
-	// 								   supposed to go full screen tho
+	w.AppWindow.SetResizable(false) //	may consider changing this one day
 	w.AppWindow.Show()
 	return w
 }
 
 // setHeaderValues initalizes all widget values that belong to GUI.Header.
-func setHeaderValues(w Elements) Elements {
+func setHeaderValues(w Elements, c bool) Elements {
 	// Buttons
 	//w.ImgMenu.SetFromIconName("open-menu-symbolic", gtk.ICON_SIZE_BUTTON)
 	w.ImgFile.SetFromIconName("document-open-symbolic", gtk.ICON_SIZE_BUTTON)
@@ -37,14 +35,14 @@ func setHeaderValues(w Elements) Elements {
 		gtk.ICON_SIZE_BUTTON)
 	//w.MenuButt.SetImage(w.ImgMenu)
 	w.PlayButt.SetImage(w.ImgPlay)
-	w.PlayButt.SetSensitive(false)
+	w.PlayButt.SetSensitive(c)
 	w.FileButt.SetImage(w.ImgFile)
 	w.VolButt.SetValue(1)
-	w.VolButt.SetSensitive(false)
+	w.VolButt.SetSensitive(c)
 	//w.MenuButt.SetPopover(w.PopMenu)
 
 	// ProgScale
-	w.ProgScale.SetSensitive(false)
+	w.ProgScale.SetSensitive(c)
 	w.ProgScale.SetDrawValue(false)
 	w.ProgScale.SetHExpand(true)
 
@@ -67,7 +65,7 @@ func setTrackBoxValues(w Elements) Elements {
 	w.TrackBox.Add(w.ImgTrack)
 	w.ImgTrack.SetHExpand(true)
 	w.ImgTrack.SetVExpand(true)
-	w.ImgTrack.SetHAlign(gtk.ALIGN_CENTER)
+	w.ImgTrack.SetHAlign(gtk.ALIGN_BASELINE)
 	w.TrackBox.ShowAll()
 
 	return w

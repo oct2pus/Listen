@@ -7,17 +7,22 @@ import (
 	"path"
 	"strings"
 
+	"github.com/dhowden/tag"
 	"github.com/gotk3/gotk3/gdk"
 )
 
 // FindArt takes the art from the track and returns a pixbuf of it.
 func FindArt(a AudioData) (*gdk.Pixbuf, error) {
 	// process picture
+	var pic *tag.Picture
 	mus, meta := a.openMusic()
 	defer mus.Close()
 
-	pic := meta.Picture()
-
+	if meta != nil {
+		pic = meta.Picture()
+	} else {
+		pic = nil
+	}
 	// todo (possibly maybe) wrap pixbuf_new_from_bytes for gotk3
 	f, err := os.Create("./.temp_cover")
 	if err != nil {
@@ -31,7 +36,7 @@ func FindArt(a AudioData) (*gdk.Pixbuf, error) {
 	if pic == nil {
 		cf, err := readFromCoverImg(mus)
 		if err != nil {
-			SendError(err, "no cover image, ignoring")
+			SendError(err, "image loading")
 			return nil, err
 		}
 		defer cf.Close()
@@ -73,7 +78,7 @@ func readFromCoverImg(mus *os.File) (*os.File, error) {
 	dir, _ := path.Split(mus.Name())
 	files, err := ioutil.ReadDir(dir)
 	if err != nil {
-		return nil, errors.New("Woah baby")
+		return nil, errors.New("cannot read directory")
 	}
 	for _, file := range files {
 		for _, format := range imgFormats {
@@ -83,5 +88,5 @@ func readFromCoverImg(mus *os.File) (*os.File, error) {
 		}
 	}
 
-	return nil, errors.New("No cover image found")
+	return nil, errors.New("no cover image found")
 }

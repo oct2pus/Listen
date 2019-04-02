@@ -59,6 +59,7 @@ func (a AudioData) openMusic() (*os.File, tag.Metadata) {
 	meta, err := tag.ReadFrom(mus)
 	if err != nil {
 		SendError(err, "writing file to metadata")
+		return mus, nil
 	}
 
 	return mus, meta

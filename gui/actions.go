@@ -2,6 +2,7 @@ package gui
 
 import (
 	"listen/logic"
+
 	"github.com/faiface/beep/speaker"
 	"github.com/gotk3/gotk3/gtk"
 )
@@ -38,6 +39,7 @@ func (a Actions) PlayPressed() Actions {
 // a music stream and sets the trackart.
 func (a Actions) FilePressed() Actions {
 	// create temporary holder window
+	println("emitted")
 	win, err := gtk.WindowNew(gtk.WINDOW_POPUP)
 	if err != nil {
 		logic.SendError(err, "holder window")
@@ -53,33 +55,19 @@ func (a Actions) FilePressed() Actions {
 	if err != nil {
 		logic.SendError(err, "file dialog")
 	}
-
 	// filter choices
 	filt, err := gtk.FileFilterNew()
 	if err != nil {
 		logic.SendError(err, "file filter")
 	}
 	filt.AddPattern("*.mp3")
-	filt.AddPattern("*.flac")
-	filt.AddPattern("*.ogg") // could possibly break if not a vorbis file.
+	//	filt.AddPattern("*.flac")	// cannot seek
+	//	filt.AddPattern("*.ogg") // could possibly break if not a vorbis file.
 	diag.SetFilter(filt)
 
 	// if option is selected
 	if diag.Run() == int(gtk.RESPONSE_ACCEPT) {
-		a.Audio = logic.Read(diag.GetFilename())
-		a.GUI.ImgPlay.SetFromIconName("media-playback-stop-symbolic",
-			gtk.ICON_SIZE_BUTTON)
-		a.GUI.ProgScale.SetSensitive(true)
-		a.GUI.PlayButt.SetSensitive(true)
-		a.GUI.VolButt.SetSensitive(true)
-		a.GUI.ProgScale.SetRange(0, float64((*a.Audio.Stream).Len()))
-		a = a.VolumeSlid()
-		if a.Audio.Art != nil {
-			a.GUI.ImgTrack.SetFromPixbuf(a.Audio.Art)
-		} else {
-			a.GUI.ImgTrack.SetFromIconName("action-unavailable-symbolic",
-				gtk.ICON_SIZE_DND)
-		}
+		a = a.setup(diag.GetFilename())
 	}
 
 	return a
@@ -105,8 +93,8 @@ func (a Actions) VolumeSlid() Actions {
 // released.
 func (a Actions) MoveProg() Actions {
 	speaker.Lock()
-	if (int(a.GUI.ProgScale.GetValue()) == (*a.Audio.Stream).Len()) {
-		a.GUI.ProgScale.SetValue(float64(((*a.Audio.Stream)).Len()-1))	
+	if int(a.GUI.ProgScale.GetValue()) == (*a.Audio.Stream).Len() {
+		a.GUI.ProgScale.SetValue(float64((*a.Audio.Stream).Len() - 1))
 	}
 	err := (*a.Audio.Stream).Seek(int(a.GUI.ProgScale.GetValue()))
 	if err != nil {
@@ -131,12 +119,16 @@ func (a Actions) DrawProg() Actions {
 func (a Actions) isEnd() Actions {
 	if a.Audio.Stream != nil &&
 		a.GUI.ProgScale.GetValue() == float64((*a.Audio.Stream).Len()) {
-		
+
+		var err error
 		speaker.Lock()
 		path := a.Audio.Path
 		a.Audio = logic.AudioData{}
 		speaker.Unlock() // speaker must be unlocked to play a stream
-		a.Audio = logic.Read(path)
+		a.Audio, err = logic.Read(path)
+		if err != nil {
+			return a
+		}
 		a.GUI.ProgScale.SetValue(0)
 		a.startStop()
 		a.GUI.ImgPlay.SetFromIconName(START,
@@ -150,10 +142,32 @@ func (a Actions) Block() {
 	block = true
 }
 
-// ParseArgs parses commandline arguments to launch a song.
-func ParseArgs(args []string) {
-	// TODO
-	// This should probably be moved as well.
+// LoadFromCMD occurs when a file is supplied before openning the program.
+func (a Actions) LoadFromCMD(path string) Actions {
+	a = a.setup(path)
+	return a
+}
+
+func (a Actions) setup(path string) Actions {
+	var err error
+	a.Audio, err = logic.Read(path)
+	if err != nil {
+		return a
+	}
+	a.GUI.ImgPlay.SetFromIconName(STOP,
+		gtk.ICON_SIZE_BUTTON)
+	a.GUI.ProgScale.SetSensitive(true)
+	a.GUI.PlayButt.SetSensitive(true)
+	a.GUI.VolButt.SetSensitive(true)
+	a.GUI.ProgScale.SetRange(0, float64((*a.Audio.Stream).Len()))
+	a = a.VolumeSlid()
+	if a.Audio.Art != nil {
+		a.GUI.ImgTrack.SetFromPixbuf(a.Audio.Art)
+	} else {
+		a.GUI.ImgTrack.SetFromIconName("action-unavailable-symbolic",
+			gtk.ICON_SIZE_DND)
+	}
+	return a
 }
 
 func (a Actions) startStop() {
