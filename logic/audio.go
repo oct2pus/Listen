@@ -16,6 +16,7 @@ import (
 // Read reads and creates an Audio file
 func Read(path string) AudioData {
 	// Open file
+	println("here")
 	f, err := os.Open(path)
 	if err != nil {
 		SendError(err, "cannot open file")

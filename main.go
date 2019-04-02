@@ -50,6 +50,4 @@ func activateConnect(app *gtk.Application) {
 		func() { actions = actions.MoveProg() })
 	window.ProgScale.ConnectAfter("draw",
 		func() { actions = actions.DrawProg() })
-	window.ProgScale.Connect("value-changed",
-		func() { actions = actions.IsEnd() })
 }

@@ -2,9 +2,7 @@ package gui
 
 import (
 	"listen/logic"
-
 	"github.com/faiface/beep/speaker"
-
 	"github.com/gotk3/gotk3/gtk"
 )
 
@@ -26,9 +24,11 @@ func (a Actions) PlayPressed() Actions {
 	case START:
 		a.GUI.ImgPlay.SetFromIconName(STOP,
 			gtk.ICON_SIZE_BUTTON)
+		block = false
 	case STOP:
 		a.GUI.ImgPlay.SetFromIconName(START,
 			gtk.ICON_SIZE_BUTTON)
+		block = true
 	}
 
 	return a
@@ -69,6 +69,7 @@ func (a Actions) FilePressed() Actions {
 		a.Audio = logic.Read(diag.GetFilename())
 		a.GUI.ImgPlay.SetFromIconName("media-playback-stop-symbolic",
 			gtk.ICON_SIZE_BUTTON)
+		a.GUI.ProgScale.SetSensitive(true)
 		a.GUI.PlayButt.SetSensitive(true)
 		a.GUI.VolButt.SetSensitive(true)
 		a.GUI.ProgScale.SetRange(0, float64((*a.Audio.Stream).Len()))
@@ -100,15 +101,13 @@ func (a Actions) VolumeSlid() Actions {
 	return a
 }
 
-func (a Actions) startStop() {
-	speaker.Lock()
-	a.Audio.Ctrl.Paused = !a.Audio.Ctrl.Paused
-	speaker.Unlock()
-}
-
-// MoveProg occurs when the user moves the slider.
+// MoveProg occurs when the user moves the slider, occurs after left click is
+// released.
 func (a Actions) MoveProg() Actions {
 	speaker.Lock()
+	if (int(a.GUI.ProgScale.GetValue()) == (*a.Audio.Stream).Len()) {
+		a.GUI.ProgScale.SetValue(float64(((*a.Audio.Stream)).Len()-1))	
+	}
 	err := (*a.Audio.Stream).Seek(int(a.GUI.ProgScale.GetValue()))
 	if err != nil {
 		logic.SendError(err, "Audio Stream Seek")
@@ -124,22 +123,24 @@ func (a Actions) DrawProg() Actions {
 	if a.Audio.Stream != nil && !block {
 		a.GUI.ProgScale.SetValue(float64((*a.Audio.Stream).Position()))
 		a.GUI.ProgScale.QueueDraw()
+		a = a.isEnd()
 	}
 	return a
 }
 
-// IsEnd is emitted when the value of ProgScale changes, checks if is the end,
-// if so reload the song and pause the player.
-func (a Actions) IsEnd() Actions {
-	if (*a.Audio.Stream).Position() == (*a.Audio.Stream).Len() {
+func (a Actions) isEnd() Actions {
+	if a.Audio.Stream != nil &&
+		a.GUI.ProgScale.GetValue() == float64((*a.Audio.Stream).Len()) {
+		
 		speaker.Lock()
+		path := a.Audio.Path
+		a.Audio = logic.AudioData{}
+		speaker.Unlock() // speaker must be unlocked to play a stream
+		a.Audio = logic.Read(path)
 		a.GUI.ProgScale.SetValue(0)
-		(*a.Audio.Stream).Seek(0)
-		println((*a.Audio.Stream))
+		a.startStop()
 		a.GUI.ImgPlay.SetFromIconName(START,
 			gtk.ICON_SIZE_BUTTON)
-		a.Audio.Ctrl.Paused = !a.Audio.Ctrl.Paused
-		speaker.Unlock()
 	}
 	return a
 }
@@ -153,4 +154,10 @@ func (a Actions) Block() {
 func ParseArgs(args []string) {
 	// TODO
 	// This should probably be moved as well.
+}
+
+func (a Actions) startStop() {
+	speaker.Lock()
+	a.Audio.Ctrl.Paused = !a.Audio.Ctrl.Paused
+	speaker.Unlock()
 }

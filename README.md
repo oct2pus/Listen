@@ -13,5 +13,5 @@ Simple Music Player; built with Gotk3.
 - [x] displays unembedded album art
 - [x] volume control
 - [x] free move
+- [x] restart song after completed
 - [ ] launch song from terminal
-- [ ] restart song after completed

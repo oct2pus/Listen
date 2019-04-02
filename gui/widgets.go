@@ -44,6 +44,7 @@ func setHeaderValues(w Elements) Elements {
 	//w.MenuButt.SetPopover(w.PopMenu)
 
 	// ProgScale
+	w.ProgScale.SetSensitive(false)
 	w.ProgScale.SetDrawValue(false)
 	w.ProgScale.SetHExpand(true)
 
