@@ -38,11 +38,3 @@ is licenced under the MPLv2.
 for golang.
 - [Heisantosh](https://github.com/heisantosh) for his
 [useful packaging guide](https://github.com/heisantosh/howto-golang-gtk).
-=======
-- [x] displays embedded track art
-- [x] pausing and resuming
-- [x] displays unembedded album art
-- [x] volume control
-- [x] free move
-- [x] restart song after completed
-- [x] launch song from terminal
