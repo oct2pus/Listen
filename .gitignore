@@ -1,3 +1,4 @@
+clean/
 cover.*
 moe.jade.oct2pus.listen
 *.flac
@@ -7,3 +8,9 @@ moe.jade.oct2pus.listen
 data/icons/*/*.png
 build/
 bin/
+debian/build/
+debian/.debhelper
+debian/moe.jade.oct2pus.listen
+debian/debhelper-build-stamp
+debian/files
+debian/moe.jade.oct2pus.listen.substvars
