@@ -13,8 +13,20 @@ Simple MP3-only Music Player; built with Gotk3.
 - fish (*build*)
 - meson (*build*)
 - fish (*build*)
+- debuild (*build*)
 
 this project uses go modules, as such it requires go 1.11 minimum.
+
+### .Deb
+
+run ```debuild --no-sign``` in the project root directory. the deb file will be
+in the directory above the project root directory.
+
+### Meson
+run ```meson build; cd build; ninja build; sudo ninja install; cd ..; 
+sudo mv moe.jade.oct2pus.listen /usr/bin```
+
+### Normal
 
 ## Licence
 
