@@ -39,7 +39,6 @@ func (a Actions) PlayPressed() Actions {
 // a music stream and sets the trackart.
 func (a Actions) FilePressed() Actions {
 	// create temporary holder window
-	println("emitted")
 	win, err := gtk.WindowNew(gtk.WINDOW_POPUP)
 	if err != nil {
 		logic.SendError(err, "holder window")
@@ -100,7 +99,6 @@ func (a Actions) MoveProg() Actions {
 	if err != nil {
 		logic.SendError(err, "Audio Stream Seek")
 	}
-	println((*a.Audio.Stream).Position(), a.GUI.ProgScale.GetValue())
 	speaker.Unlock()
 	block = false
 	return a
