@@ -1,6 +1,9 @@
-cover.png
-listen
+cover.*
+moe.jade.oct2pus.listen
 *.flac
 *.ogg
 *.mp3
 .temp_cover
+data/icons/*/*.png
+build/
+bin/

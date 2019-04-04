@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2019 Octopus Octopus <oct2pus@jade.moe> -->
+<component type="desktop-application">
+  <id>moe.jade.oct2pus.listen.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0+</project_license>
+  <name>Listen</name>
+  <summary>Preview MP3 files</summary>
+  <description>
+    <p>Just 1 click and your song starts, no nonsense.</p>
+    <ol>
+      <li>Open Files application and select files and folders to share</li>
+      <li>Right click and select QR Share</li>
+      <li>Scan the QR code image or go to the link provided to access the shared files</li>
+    </ol>
+    <p>To stop sharing click the Stop Sharing button</p>
+    <p>The shared link can be accessed by anyone in the same network using a web browser.</p>
+  </description>
+  <provides>
+    <binary>moe.jade.oct2pus.listen</binary>
+  </provides>
+  <releases>
+    <release version="1.0.0" date="2019-04-01">
+      <description>
+        <ul>
+          <li>Playback of MP3 files</li>
+          <li>Track player resets after finishing</li>
+          <li>Bug fixes</li>
+        </ul>
+      </description>
+    </release>
+  </releases>
+  <developer_name>Octopus Octopus</developer_name>
+  <url type="homepage">https://github.com/oct2pus/listen</url>
+  <url type="bugtracker">https://github.com/oct2pus/listen/issues</url>
+</component>

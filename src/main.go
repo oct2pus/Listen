@@ -1,8 +1,8 @@
 package main
 
 import (
-	"listen/gui"
-	"listen/logic"
+	"listen/src/gui"
+	"listen/src/logic"
 	"os"
 	"strings"
 

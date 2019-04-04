@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Listen
+Exec=com.github.oct2pus.listen %f
+Comment=Preview MP3 files
+Icon=moe.jade.oct2pus.listen
+Categories=GTK;AudioVideo;Audio
+Keywords=listen;mp3;music;player
