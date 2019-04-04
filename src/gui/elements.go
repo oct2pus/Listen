@@ -1,7 +1,7 @@
 package gui
 
 import (
-	"listen/logic"
+	"listen/src/logic"
 	"log"
 
 	"github.com/gotk3/gotk3/gtk"

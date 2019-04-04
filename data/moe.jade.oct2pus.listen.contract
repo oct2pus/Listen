@@ -1,0 +1,8 @@
+
+[Contractor Entry]
+Name=Listen
+Icon=moe.jade.oct2pus.listen
+Description=Preview MP3 files
+MimeType=audio/mpeg;audio/mp3
+Exec=moe.jade.oct2pus.listen %F
+Gettext-Domain=moe.jade.oct2pus.listen

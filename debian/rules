@@ -1,0 +1,23 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@
+
+override_dh_auto_clean:
+	rm -rf debian/build
+
+override_dh_auto_configure:
+	mkdir -p debian/build
+	cd debian/build && meson --prefix=/usr ../..
+
+override_dh_auto_build:
+	cd debian/build && ninja -v && ninja build
+
+override_dh_auto_test:
+	cd debian/build && ninja test
+
+override_dh_auto_install:
+	cd debian/build && DESTDIR=${CURDIR}/debian/moe.jade.oct2pus.listen ninja install
+	mkdir -p debian/moe.jade.oct2pus.listen/usr/bin
+	cp bin/moe.jade.oct2pus.listen debian/moe.jade.oct2pus.listen/usr/bin
+	cp -R po/locale debian/moe.jade.oct2pus.listen/usr/share

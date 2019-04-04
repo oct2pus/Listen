@@ -3,19 +3,42 @@ Simple MP3-only Music Player; built with Gotk3.
 
 ## Building
 
-### Dependencies
-
 - GTK 3.6-3.22
 - GLib 2.36-2.40
 - Cairo 1.10
 - libasound2
+- librsvg2 (*build*)
+- fish (*build*)
+- meson (*build*)
+- fish (*build*)
+- debuild (*build*)
 
-requires at least go 1.8
+this project uses go modules, as such it requires go 1.11 minimum.
 
-```git clone https://github.com/oct2pus/listen; cd listen; go get -u; go build .```
+### .Deb
 
-## Feature Checklist for 1.0
+run ```debuild --no-sign``` in the project root directory. the deb file will be
+in the directory above the project root directory.
 
+### Meson
+run ```meson build; cd build; ninja build; sudo ninja install; cd ..; 
+sudo mv moe.jade.oct2pus.listen /usr/bin```
+
+### Normal
+
+## Licence
+
+This project is licenced under the GPL 3.0 or later except as noted,
+the icon comes from [fxemoji](https://github.com/mozilla/fxemoji) and
+is licenced under the MPLv2.
+
+## Credits
+
+- Gotk3's developers for their excellent (if incomplete) gtk bindings
+for golang.
+- [Heisantosh](https://github.com/heisantosh) for his
+[useful packaging guide](https://github.com/heisantosh/howto-golang-gtk).
+=======
 - [x] displays embedded track art
 - [x] pausing and resuming
 - [x] displays unembedded album art
