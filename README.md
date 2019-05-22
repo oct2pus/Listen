@@ -34,7 +34,7 @@ is licenced under the MPLv2.
 
 ## Credits
 
-- Gotk3's developers for their excellent (if incomplete) gtk bindings
+- [Gotk3's](https://github.com/gotk3/gotk3) developers for their excellent (if incomplete) gtk bindings
 for golang.
 - [Heisantosh](https://github.com/heisantosh) for his
 [useful packaging guide](https://github.com/heisantosh/howto-golang-gtk).
