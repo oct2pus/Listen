@@ -24,8 +24,6 @@ in the directory above the project root directory.
 run ```meson build; cd build; ninja build; sudo ninja install; cd ..; 
 sudo mv moe.jade.oct2pus.listen /usr/bin```
 
-### Normal
-
 ## Licence
 
 This project is licenced under the GPL 3.0 or later except as noted,
