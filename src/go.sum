@@ -1,5 +1,5 @@
-github.com/dhowden/tag v0.0.0-20181104225729-a9f04c2798ca h1:EsPh1VImRZ6OOhWtz/zzwTjxVQKcKIiqS5tYNdx2eCg=
-github.com/dhowden/tag v0.0.0-20181104225729-a9f04c2798ca/go.mod h1:SniNVYuaD1jmdEEvi+7ywb1QFR7agjeTdGKyFb0p7Rw=
+github.com/dhowden/tag v0.0.0-20190519100835-db0c67e351b1 h1:HR8W6GvuS20j4kNxa/XQeyVA0vHLKVMCAVJj0RGWauY=
+github.com/dhowden/tag v0.0.0-20190519100835-db0c67e351b1/go.mod h1:SniNVYuaD1jmdEEvi+7ywb1QFR7agjeTdGKyFb0p7Rw=
 github.com/faiface/beep v1.0.1 h1:SYTt7Bpt0C9KgeLkyNzTTuW9o3D3lTyAPAwCr5EQjO4=
 github.com/faiface/beep v1.0.1/go.mod h1:1yLb5yRdHMsovYYWVqYLioXkVuziCSITW1oarTeduQM=
 github.com/gdamore/encoding v1.0.0/go.mod h1:alR0ol34c49FCSBLjhosxzcPHQbf2trDkoo5dl+VrEg=
@@ -8,8 +8,8 @@ github.com/gopherjs/gopherjs v0.0.0-20180628210949-0892b62f0d9f/go.mod h1:wJfORR
 github.com/gopherjs/gopherjs v0.0.0-20180825215210-0210a2f0f73c/go.mod h1:wJfORRmW1u3UXTncJ5qlYoELFm8eSnnEO6hX4iZ3EWY=
 github.com/gopherjs/gopherwasm v0.1.1/go.mod h1:kx4n9a+MzHH0BJJhvlsQ65hqLFXDO/m256AsaDPQ+/4=
 github.com/gopherjs/gopherwasm v1.0.0/go.mod h1:SkZ8z7CWBz5VXbhJel8TxCmAcsQqzgWGR/8nMhyhZSI=
-github.com/gotk3/gotk3 v0.0.0-20190403071124-dfecfba5e7d4 h1:Z/jVwJiNS36ZhnHWjYCc49o66XkfNiLCXCI4t0R/9u0=
-github.com/gotk3/gotk3 v0.0.0-20190403071124-dfecfba5e7d4/go.mod h1:Eew3QBwAOBTrfFFDmsDE5wZWbcagBL1NUslj1GhRveo=
+github.com/gotk3/gotk3 v0.0.0-20190512183708-8365021fde1a h1:m3jc2JbRKa2mw2wKns7evioTmQGPY0Si5SML1la01xs=
+github.com/gotk3/gotk3 v0.0.0-20190512183708-8365021fde1a/go.mod h1:Eew3QBwAOBTrfFFDmsDE5wZWbcagBL1NUslj1GhRveo=
 github.com/hajimehoshi/go-mp3 v0.1.1 h1:Y33fAdTma70fkrxnc9u50Uq0lV6eZ+bkAlssdMmCwUc=
 github.com/hajimehoshi/go-mp3 v0.1.1/go.mod h1:4i+c5pDNKDrxl1iu9iG90/+fhP37lio6gNhjCx9WBJw=
 github.com/hajimehoshi/oto v0.1.1/go.mod h1:hUiLWeBQnbDu4pZsAhOnGqMI1ZGibS6e2qhQdfpwz04=

@@ -15,6 +15,8 @@ import (
 func FindArt(a AudioData) (*gdk.Pixbuf, error) {
 	// process picture
 	var pic *tag.Picture
+	var pix *gdk.Pixbuf
+
 	mus, meta := a.openMusic()
 	defer mus.Close()
 
@@ -23,15 +25,11 @@ func FindArt(a AudioData) (*gdk.Pixbuf, error) {
 	} else {
 		pic = nil
 	}
-	// todo (possibly maybe) wrap pixbuf_new_from_bytes for gotk3
-	f, err := os.Create("./.temp_cover")
+
+	loader, err := gdk.PixbufLoaderNew()
 	if err != nil {
-		SendError(err, "creating file")
+		SendError(err, "creating PixbufLoader")
 	}
-	defer f.Close()
-
-	defer os.Remove("./.temp_cover")
-
 	// if we don't have a picture, look for cover.ext
 	if pic == nil {
 		cf, err := readFromCoverImg(mus)
@@ -50,23 +48,19 @@ func FindArt(a AudioData) (*gdk.Pixbuf, error) {
 		if err != nil {
 			SendError(err, "reading from cover.ext")
 		}
-		f.Write(coverData)
-	} else {
-		_, err = f.Write((*pic).Data)
+		pix, err = loader.WriteAndReturnPixbuf(coverData)
 		if err != nil {
-			SendError(err, "writing to cover")
+			SendError(err, "writing pixbuf")
 		}
-	}
-
-	// this is done because i can't load images directly into pixbuf
-	// from a byte stream
-	pix, err := gdk.PixbufNewFromFileAtScale("./.temp_cover",
-		ArtSize,
-		ArtSize,
-		true)
-
-	if err != nil {
-		SendError(err, "setting album art pixbuf")
+	} else {
+		pix, err = loader.WriteAndReturnPixbuf((*pic).Data)
+		if err != nil {
+			SendError(err, "writing pixbuf")
+		}
+		pix, err = pix.ScaleSimple(ArtSize, ArtSize, gdk.INTERP_BILINEAR)
+		if err != nil {
+			SendError(err, "scaling pixbuf")
+		}
 	}
 
 	return pix, nil
