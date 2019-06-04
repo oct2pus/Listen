@@ -22,11 +22,8 @@ function create_translations
     end
 end
 
-
 # Build the app
-mkdir -p bin
-cd src/; go build -o {$app_id} main.go; cd ..
-mv src/{$app_id} bin/{$app_id}
+cd src/; go build
 if count {$translations} > /dev/null
     create_translations
 end
