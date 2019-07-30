@@ -1,3 +1,4 @@
+github.com/DATA-DOG/go-sqlmock v1.3.3+incompatible/go.mod h1:f/Ixk793poVmq4qj/V1dPUg2JEAKC73Q5eFN3EC/SaM=
 github.com/dhowden/tag v0.0.0-20190519100835-db0c67e351b1 h1:HR8W6GvuS20j4kNxa/XQeyVA0vHLKVMCAVJj0RGWauY=
 github.com/dhowden/tag v0.0.0-20190519100835-db0c67e351b1/go.mod h1:SniNVYuaD1jmdEEvi+7ywb1QFR7agjeTdGKyFb0p7Rw=
 github.com/faiface/beep v1.0.1 h1:SYTt7Bpt0C9KgeLkyNzTTuW9o3D3lTyAPAwCr5EQjO4=

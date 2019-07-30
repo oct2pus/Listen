@@ -1,7 +1,7 @@
 package gui
 
 import (
-	"listen/src/logic"
+	"github.com/oct2pus/listen/src/logic"
 
 	"github.com/faiface/beep/speaker"
 	"github.com/gotk3/gotk3/gtk"

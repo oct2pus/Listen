@@ -1,8 +1,8 @@
 package main
 
 import (
-	"listen/src/gui"
-	"listen/src/logic"
+	"github.com/oct2pus/listen/src/gui"
+	"github.com/oct2pus/listen/src/logic"
 	"os"
 	"strings"
 
